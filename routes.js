@@ -18,6 +18,26 @@ dateNightRoutes.get("/jokes", (req, res) => {
 
 });
 
+dateNightRoutes.get("/intimate", (req, res) => {
+    // .json sends response as JSON
+    // res.status(200).json(items); //note: defaults to 200 if request has succeeded.
+    pool.query("SELECT * FROM intimate").then(result => {
+        console.log(result.rows);
+        res.json(result.rows);
+    })
+
+});
+
+dateNightRoutes.get("/trivia", (req, res) => {
+    // .json sends response as JSON
+    // res.status(200).json(items); //note: defaults to 200 if request has succeeded.
+    pool.query("SELECT * FROM trivia").then(result => {
+        console.log(result.rows);
+        res.json(result.rows);
+    })
+
+});
+
 
 
 module.exports = { dateNightRoutes };

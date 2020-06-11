@@ -5,7 +5,7 @@ const credentials = new Pool({
     host: "localhost",
     port: 5432,
     //CHANGE DATABASE NAME BASED ON YOUR CREATED ONE
-    database: "jokes",
+    database: "FinalProject",
     ssl: false
 });
 module.exports = credentials;
