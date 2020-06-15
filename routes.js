@@ -22,6 +22,15 @@ dateNightRoutes.get("/jokes", (req, res) => {
   });
 });
 
+dateNightRoutes.get("/randomjoke", (req, res) => {
+  // .json sends response as JSON
+  // res.status(200).json(items); //note: defaults to 200 if request has succeeded.
+  pool.query("SELECT * FROM jokes").then((result) => {
+    console.log(result.rows);
+    res.json(result.rows[Math.floor(Math.random() * result.rows.length)]);
+  });
+});
+
 dateNightRoutes.get("/intimate", (req, res) => {
   // .json sends response as JSON
   // res.status(200).json(items); //note: defaults to 200 if request has succeeded.
