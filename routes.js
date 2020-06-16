@@ -13,18 +13,16 @@ dateNightRoutes.get("/beer", (req, res) => {
     .then((data) => res.json(data));
 });
 
+//
 dateNightRoutes.get("/jokes", (req, res) => {
-  // .json sends response as JSON
-  // res.status(200).json(items); //note: defaults to 200 if request has succeeded.
-  pool.query("SELECT * FROM jokes").then((result) => {
+  pool.query("SELECT*FROM jokes").then((result) => {
     console.log(result.rows);
     res.json(result.rows);
   });
 });
 
 dateNightRoutes.get("/randomjoke", (req, res) => {
-  // .json sends response as JSON
-  // res.status(200).json(items); //note: defaults to 200 if request has succeeded.
+
   pool.query("SELECT * FROM jokes").then((result) => {
     console.log(result.rows);
     res.json(result.rows[Math.floor(Math.random() * result.rows.length)]);
@@ -32,8 +30,6 @@ dateNightRoutes.get("/randomjoke", (req, res) => {
 });
 
 dateNightRoutes.get("/intimate", (req, res) => {
-  // .json sends response as JSON
-  // res.status(200).json(items); //note: defaults to 200 if request has succeeded.
   pool.query("SELECT * FROM intimate").then((result) => {
     console.log(result.rows);
     res.json(result.rows);
@@ -41,8 +37,6 @@ dateNightRoutes.get("/intimate", (req, res) => {
 });
 
 dateNightRoutes.get("/trivia", (req, res) => {
-  // .json sends response as JSON
-  // res.status(200).json(items); //note: defaults to 200 if request has succeeded.
   pool.query("SELECT * FROM trivia").then((result) => {
     console.log(result.rows);
     res.json(result.rows);
