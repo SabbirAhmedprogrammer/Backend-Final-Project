@@ -1,7 +1,7 @@
-// require the Express module
+
 const express = require("express");
 const fetch = require("node-fetch");
-//creates a new router object
+
 const dateNightRoutes = express.Router();
 const pool = require("./connection");
 
@@ -13,19 +13,10 @@ dateNightRoutes.get("/beer", (req, res) => {
     .then((data) => res.json(data));
 });
 
-//
 dateNightRoutes.get("/jokes", (req, res) => {
   pool.query("SELECT*FROM jokes").then((result) => {
     console.log(result.rows);
     res.json(result.rows);
-  });
-});
-
-dateNightRoutes.get("/randomjoke", (req, res) => {
-
-  pool.query("SELECT * FROM jokes").then((result) => {
-    console.log(result.rows);
-    res.json(result.rows[Math.floor(Math.random() * result.rows.length)]);
   });
 });
 
@@ -41,6 +32,33 @@ dateNightRoutes.get("/trivia", (req, res) => {
     console.log(result.rows);
     res.json(result.rows);
   });
+});
+
+dateNightRoutes.get("/checklist-items", (req, res) => {
+  pool.query("SELECT * FROM checklist ORDER BY id").then(result => {
+    res.json(result.rows);
+  });
+});
+
+// route
+dateNightRoutes.post("/checklist-items", (req, res) => {
+  pool.query("INSERT INTO checklist (task, completed) VALUES($1::VARCHAR, $2::BOOLEAN)", [req.body.task, req.body.completed]).then(() => {
+    res.json(req.body);
+  })
+});
+
+// route
+dateNightRoutes.put("/checklist-items/:id", (req, res) => {
+  pool.query("UPDATE checklist SET completed=$1::BOOLEAN WHERE id=$2::INT", [req.body.completed, req.params.id]).then(() => {
+    res.json(req.body);
+  })
+});
+
+// route
+dateNightRoutes.delete("/checklist-items/:id", (req, res) => {
+  pool.query("DELETE FROM checklist WHERE id=$1::INT", [req.params.id]).then(() => {
+    res.json(`${req.params.id}`);
+  })
 });
 
 module.exports = { dateNightRoutes };
