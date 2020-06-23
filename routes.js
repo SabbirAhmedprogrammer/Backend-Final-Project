@@ -34,31 +34,4 @@ dateNightRoutes.get("/trivia", (req, res) => {
   });
 });
 
-dateNightRoutes.get("/checklist-items", (req, res) => {
-  pool.query("SELECT * FROM checklist ORDER BY id").then(result => {
-    res.json(result.rows);
-  });
-});
-
-// route
-dateNightRoutes.post("/checklist-items", (req, res) => {
-  pool.query("INSERT INTO checklist (task, completed) VALUES($1::VARCHAR, $2::BOOLEAN)", [req.body.task, req.body.completed]).then(() => {
-    res.json(req.body);
-  })
-});
-
-// route
-dateNightRoutes.put("/checklist-items/:id", (req, res) => {
-  pool.query("UPDATE checklist SET completed=$1::BOOLEAN WHERE id=$2::INT", [req.body.completed, req.params.id]).then(() => {
-    res.json(req.body);
-  })
-});
-
-// route
-dateNightRoutes.delete("/checklist-items/:id", (req, res) => {
-  pool.query("DELETE FROM checklist WHERE id=$1::INT", [req.params.id]).then(() => {
-    res.json(`${req.params.id}`);
-  })
-});
-
 module.exports = { dateNightRoutes };
